@@ -10,8 +10,10 @@ from matplotlib.collections import LineCollection
 from matplotlib.patches import Circle
 # skyfield for star data
 from skyfield.api import Star, load, wgs84
-from skyfield.data import hipparcos
+from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
+
+import parameters
 
 # Loading Earth and Star Data
 # skyfield library to load star data
@@ -22,8 +24,8 @@ with load.open(hipparcos.URL) as f:
     stars = hipparcos.load_dataframe(f)
 
 # Setting up the Obversation Location
-location = 'Times Square, New York, NY'
-when = '2023-01-01 00:00'
+# location = 'Times Square, New York, NY'
+when = f'{year}-{month}-{day} {hour}'
 
 # geopy library for latitude and longitute
 locator = Nominatim(user_agent='myGeocoder', timeout=3)
@@ -72,7 +74,6 @@ magnitude = stars['magnitude'][bright_stars]
 
 fig, ax = plt.subplots(figsize=(chart_size, chart_size))
 
-
 border = plt.Circle((0, 0), 1, color='#16161d', fill=True)
 ax.add_patch(border)
 
@@ -86,8 +87,35 @@ horizon = Circle((0, 0), radius=1, transform=ax.transData)
 for col in ax.collections:
     col.set_clip_path(horizon)
 
+# And the constellation outlines come from Stellarium.  We make a list
+# of the stars at which each edge stars, and the star at which each edge
+# ends.
+
+url = ('https://raw.githubusercontent.com/Stellarium/stellarium/master'
+       '/skycultures/modern_st/constellationship.fab')
+
+with load.open(url) as f:
+    constellations = stellarium.parse_constellations(f)
+
+edges = [edge for name, edges in constellations for edge in edges]
+edges_star1 = [star1 for star1, star2 in edges]
+edges_star2 = [star2 for star1, star2 in edges]
+
+# The constellation lines will each begin at the x,y of one star and end
+# at the x,y of another.  We have to "rollaxis" the resulting coordinate
+# array into the shape that matplotlib expects.
+
+xy1 = stars[['x', 'y']].loc[edges_star1].values
+xy2 = stars[['x', 'y']].loc[edges_star2].values
+lines_xy = np.rollaxis(np.array([xy1, xy2]), 1)
+
+# Draw the constellation lines.
+
+ax.add_collection(LineCollection(lines_xy, colors='#468130'))
+
 ax.set_aspect('equal')
 ax.set_xlim(-1, 1)
 ax.set_ylim(-1, 1)
+ax.set_title(f'Star Chart for {location} at {when}')
 plt.axis('off')
 plt.show()
