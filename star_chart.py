@@ -13,8 +13,6 @@ from skyfield.api import Star, load, wgs84
 from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
 
-import parameters
-
 # Loading Earth and Star Data
 # skyfield library to load star data
 # de421 shows position of earth and sun in space
@@ -29,7 +27,7 @@ when = f'{year}-{month}-{day} {hour}'
 
 # geopy library for latitude and longitute
 locator = Nominatim(user_agent='myGeocoder', timeout=3)
-location = locator.geocode(location)
+location = locator.geocode(location, language='en')
 lat, long = location.latitude, location.longitude
 
 # tzwhere and pytz libraries to get the timezone of our location
@@ -74,18 +72,12 @@ magnitude = stars['magnitude'][bright_stars]
 
 fig, ax = plt.subplots(figsize=(chart_size, chart_size))
 
+fig.canvas.manager.set_window_title('Star Chart')
+
 border = plt.Circle((0, 0), 1, color='#16161d', fill=True)
 ax.add_patch(border)
 
 marker_size = max_star_size * 10 ** (magnitude / -2.5)
-
-ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars],
-           s=marker_size, color='white', marker='.', linewidths=0,
-           zorder=2)
-
-horizon = Circle((0, 0), radius=1, transform=ax.transData)
-for col in ax.collections:
-    col.set_clip_path(horizon)
 
 # And the constellation outlines come from Stellarium.  We make a list
 # of the stars at which each edge stars, and the star at which each edge
@@ -113,9 +105,18 @@ lines_xy = np.rollaxis(np.array([xy1, xy2]), 1)
 
 ax.add_collection(LineCollection(lines_xy, colors='#468130'))
 
+ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars],
+           s=marker_size, color='white', marker='.', linewidths=0,
+           zorder=2)
+
+horizon = Circle((0, 0), radius=1, transform=ax.transData)
+for col in ax.collections:
+    col.set_clip_path(horizon)
+
 ax.set_aspect('equal')
 ax.set_xlim(-1, 1)
 ax.set_ylim(-1, 1)
-ax.set_title(f'Star Chart for {location} at {when}')
+ax.set_title(f'Star Chart for\n'
+             f'{location} at {when}')
 plt.axis('off')
 plt.show()
