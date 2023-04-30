@@ -2,9 +2,6 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk  # Getting Image and Image TK from PIL
 
-import parameters
-import starchartlist
-
 
 class Constellation:
     def __init__(self, name1, name2, abbr, on_meridian, zodiac, startMonth, endMonth):
@@ -18,89 +15,91 @@ class Constellation:
 
 
 Aqr = Constellation("Aquarius", "The Water Bearer",
-                    "Aqr", "Oct. 10, 9 pm", True, 9, 10)
-Ari = Constellation("Aries", "The Ram", "Ari", "Dec. 10, 9 pm", True, 11, 12)
-Cnc = Constellation("Cancer", "The Crab", "Cnc", "Mar. 15, 9 pm", True, 3, 4)
+                    "Aqr", "Oct. 10, 9 pm", True, "09", "10")
+Ari = Constellation("Aries", "The Ram", "Ari",
+                    "Dec. 10, 9 pm", True, '11', '12')
+Cnc = Constellation("Cancer", "The Crab", "Cnc",
+                    "Mar. 15, 9 pm", True, '03', '04')
 Cap = Constellation(
-    "Capricornus", "The Sea Goat, the Goat, Capricorn", "Cap", "Sept. 20, 9 pm", True, 8, 9)
-Gem = Constellation("Gemini", "The Twins", "Gem", "Feb. 20, 9 pm", True, 2, 3)
-Leo = Constellation("Leo", "The Lion", "Leo", "Apr. 10, 9 pm", True, 3, 4)
+    "Capricornus", "The Sea Goat, the Goat, Capricorn", "Cap", "Sept. 20, 9 pm", True, '08', '09')
+Gem = Constellation("Gemini", "The Twins", "Gem",
+                    "Feb. 20, 9 pm", True, '02', '03')
+Leo = Constellation("Leo", "The Lion", "Leo",
+                    "Apr. 10, 9 pm", True, '03', '04')
 Lib = Constellation("Libra", "The Scales, the Balance",
-                    "Lib", "Jun. 20, 9 pm", True, 6, 7)
-Psc = Constellation("Pisces", "The Fish", "Psc", "Nov. 10, 9 pm", True, 10, 11)
+                    "Lib", "Jun. 20, 9 pm", True, '06', '07')
+Psc = Constellation("Pisces", "The Fish", "Psc",
+                    "Nov. 10, 9 pm", True, '10', '11')
 Sgr = Constellation("Sagittarius", "The Archer",
-                    "Sgr", "Aug. 20, 9 pm", True, 7, 8)
+                    "Sgr", "Aug. 20, 9 pm", True, '07', '08')
 Sco = Constellation("Scorpius", "The Scorpion", "Sco",
-                    "Jul. 20, 9 pm", True, 7, 8)
-Tau = Constellation("Taurus", "The Bull", "Tau", "Jan. 15, 9 pm", True, 1, 2)
-Vir = Constellation("Virgo", "The Maiden", "Vir", "May 25, 9 pm", True, 5, 6)
+                    "Jul. 20, 9 pm", True, '07', '08')
+Tau = Constellation("Taurus", "The Bull", "Tau",
+                    "Jan. 15, 9 pm", True, '01', '02')
+Vir = Constellation("Virgo", "The Maiden", "Vir",
+                    "May 25, 9 pm", True, '05', '06')
 
 constObjList = [Aqr, Ari, Cnc, Cap, Gem, Leo, Lib, Psc, Sgr,
                 Sco, Tau, Vir]  # List of constellation objects available
 
-results = tk.Toplevel(bg='#000028')  # Sets new window and adds color
-results.geometry("500x600")  # Sets window size
-results.title("Results")  # Sets window title
 
-# Photo above text
-# Sets photo to be used
-
-# ------vvvvvvvv------ Constellation Image goes below ------vvvvvvvv------
-image1 = Image.open("assets/aquarius-cons-m.jpg")
-resized_image = image1.resize((125, 175), Image.ANTIALIAS)  # Resizing photo
-test = ImageTk.PhotoImage(resized_image)  # Defines photo for use in label
-label1 = tk.Label(results, image=test, bg="#000028")  # Label for photo
-label1.image = test  # placing photo in label
-label1.place(relx=0.33, rely=0.05, relwidth=0.33,
-             relheight=0.33)  # Label location placement
-
-
-# Frame for text and button
-lower_frame = tk.Frame(results, bd=5, bg="#000028")
-lower_frame.place(relx=0.5, rely=0.40, relwidth=0.75,
-                  relheight=0.5, anchor='n')  # Frame location placement
-
-
-# ------------------ Aqr info populates, working to get the information to populate based on selection ------------------------
-# Page text
-
-# maybe have the label creations outside of the function, and then have the function just
 def generateInfoWindow(constellation):
+    information = tk.Tk()  # Sets new window
+    information.geometry("750x600")  # Sets window size
+    information.title("Information")  # Sets window title
+
+    # frame = tk.Frame(information, width=600, height=400)
+    # frame.pack()
+    # frame.place(anchor='center', relx=0.5, rely=0.5)
+    # img = ImageTk.PhotoImage(Image.open("images/Aquarius_IAU-596px.png"))
+    # label = tk.Label(frame, image=img)
+    # label.pack()
+
+    # Frame for text and button
+    lower_frame = tk.Frame(information, bd=5)
+    lower_frame.place(relx=0.5, rely=0.40, relwidth=0.75,
+                      relheight=0.5, anchor='n')  # Frame location placement
+
+    # maybe have the label creations outside of the function, and then have the function just
+
+    # formatting labels
+    name1Label = tk.Label(lower_frame)
+    name1Label.pack()
+
+    name2Label = tk.Label(lower_frame)
+    name2Label.pack()
+
+    abbrLabel = tk.Label(lower_frame)
+    abbrLabel.pack()
+
+    meridianLabel = tk.Label(lower_frame)
+    meridianLabel.pack()
+
+    zodiacLabel = tk.Label(lower_frame)
+    zodiacLabel.pack()
+
+    monthsLabel = tk.Label(lower_frame)
+    monthsLabel.pack()
+
     # assign the text attribute values to the constellation object attributes that were passed
     # We'll also have to put in this function the loops that will pull the extra data
     # out of the constellations.txt file based on the constellation object's acronym
     # for the extra info
 
-    text1 = tk.Label(lower_frame,
-                     bg="#000028", fg='white')  # Placing name1
-    text2 = tk.Label(lower_frame, text="Alternatively known as: " +
-                     Constellation.name2, bg="#000028", fg='white')  # Placing name2
-    text3 = tk.Label(lower_frame, text="Constellation Abbreviation: " +
-                     Constellation.abbr, bg="#000028", fg='white')  # Placing abbr
-    text4 = tk.Label(lower_frame, text="Date Constellation is on the Meridian: " +
-                     Constellation.on_meridian, bg="#000028", fg='white')  # Placing on_meridian
+    # populating labels with text
+    name1Label['text'] = "Name: " + constellation.name1
+    name2Label['text'] = "Alternatively known as: " + constellation.name2
+    abbrLabel['text'] = "Constellation Abbreviation: " + constellation.abbr
+    meridianLabel['text'] = "Date Constellation is on the Meridian: " + \
+        constellation.on_meridian
 
-    text1[text] = "Name:" + constellation.name1
+    # statement to change text5 label text based on if constellation is included in zodiac
+    if constellation.zodiac == True:
+        zodiacLabel['text'] = "Constellation is a Zodiac Constellation"
+    else:
+        zodiacLabel['text'] = "Constellation is not a Zodiac Constellation"
 
+    monthsLabel['text'] = "Best Months to View: " + \
+        str(constellation.startMonth) + " - "+str(constellation.endMonth)
 
-# statement to change text5 label text based on if constellation is included in zodiac
-if Aqr.zodiac == True:
-    text5 = tk.Label(
-        lower_frame, text="Constellation is a Zodiac Constellation", bg="#000028", fg='white')
-else:
-    text5 = tk.Label(
-        lower_frame, text="Constellation is not a Zodiac Constellation", bg="#000028", fg='white')
-
-text6 = tk.Label(lower_frame, text="Best Months to View: "+str(Aqr.startMonth) +
-                 " - "+str(Aqr.endMonth), bg="#000028", fg='white')  # Placing viewing months
-
-
-# Formatting space for text placement
-text1.pack(padx=(20, 5))
-text2.pack(padx=5)
-text3.pack(padx=5)
-text4.pack(padx=5)
-text5.pack(padx=5)
-text6.pack(padx=5)
-
-results.mainloop()
+    information.mainloop()

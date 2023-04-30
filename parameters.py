@@ -13,9 +13,9 @@ def selections():
     month = t_month.get()
     day = t_day.get()
     hour = t_hour.get()
+    starchartlist.listCurrentConstellations(month)
     with open("star_chart.py") as f:
         exec(f.read())
-    starchartlist.listCurrentConstellations(month)
 
 
 label = ttk.Label(text="City:", )
