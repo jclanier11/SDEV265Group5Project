@@ -44,8 +44,8 @@ constObjList = [Aqr, Ari, Cnc, Cap, Gem, Leo, Lib, Psc, Sgr,
 
 
 def generateInfoWindow(constellation):
-    information = tk.Tk()  # Sets new window
-    information.geometry("750x600")  # Sets window size
+    information = tk.Toplevel()  # Sets new window
+    information.geometry("600x750")  # Sets window size
     information.title("Information")  # Sets window title
 
     # frame = tk.Frame(information, width=600, height=400)
@@ -55,30 +55,35 @@ def generateInfoWindow(constellation):
     # label = tk.Label(frame, image=img)
     # label.pack()
 
-    # Frame for text and button
-    lower_frame = tk.Frame(information, bd=5)
-    lower_frame.place(relx=0.5, rely=0.40, relwidth=0.75,
-                      relheight=0.5, anchor='n')  # Frame location placement
-
     # maybe have the label creations outside of the function, and then have the function just
 
-    # formatting labels
-    name1Label = tk.Label(lower_frame)
+    imageFrame = tk.Frame(information, width=500, height=500)
+    imageFrame.pack()
+
+    # opening constellation image
+    img = Image.open('images/'+constellation.name1+'.png')
+
+    # resizing and placing image into frame
+    constellImg = ImageTk.PhotoImage(img.resize((500, 555), Image.ANTIALIAS))
+    imgLabel = tk.Label(imageFrame, image=constellImg)
+    imgLabel.pack()
+
+    name1Label = tk.Label(information)
     name1Label.pack()
 
-    name2Label = tk.Label(lower_frame)
+    name2Label = tk.Label(information)
     name2Label.pack()
 
-    abbrLabel = tk.Label(lower_frame)
+    abbrLabel = tk.Label(information)
     abbrLabel.pack()
 
-    meridianLabel = tk.Label(lower_frame)
+    meridianLabel = tk.Label(information)
     meridianLabel.pack()
 
-    zodiacLabel = tk.Label(lower_frame)
+    zodiacLabel = tk.Label(information)
     zodiacLabel.pack()
 
-    monthsLabel = tk.Label(lower_frame)
+    monthsLabel = tk.Label(information)
     monthsLabel.pack()
 
     # assign the text attribute values to the constellation object attributes that were passed

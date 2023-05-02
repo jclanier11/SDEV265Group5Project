@@ -13,6 +13,9 @@ from skyfield.api import Star, load, wgs84
 from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
 
+import starchartlist
+
+
 # Loading Earth and Star Data
 # skyfield library to load star data
 # de421 shows position of earth and sun in space
@@ -119,4 +122,7 @@ ax.set_ylim(-1, 1)
 ax.set_title(f'Star Chart for\n'
              f'{location} at {when}')
 plt.axis('off')
-plt.show()
+
+plt.show(block=False)
+
+starchartlist.listCurrentConstellations(month)

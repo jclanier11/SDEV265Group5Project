@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 import constellations
 
 
@@ -11,14 +10,14 @@ def listCurrentConstellations(month):
     month selection."""
 
     # starting the new popup window
-    constList = tk.Tk()
+    constList = tk.Toplevel()
     constList.config(width=200, height=200)
     constList.title("Constellation List")
 
     # creating the header above the buttons
     header = tk.Label(constList,
-                      text='Star Chart takes a few seconds to load, please be patient! \
-                        Here is more information for the current \nZodiac constellations in the Sky Chart:')
+                      text='Star Chart takes a few seconds to load, please be patient!\n'
+                      '\n Here are the constellations that are best viewed' '\n in the month you chose:')
     header.pack()
 
     # empty list to hold the Constellation objects that match the user's month selection
