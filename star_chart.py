@@ -120,7 +120,8 @@ ax.set_aspect('equal')
 ax.set_xlim(-1, 1)
 ax.set_ylim(-1, 1)
 ax.set_title(f'Star Chart for\n'
-             f'{location} at {when}')
+             f'{location} at {when}\n'
+             f'{utc_dt} UTC')
 plt.axis('off')
 
 plt.show(block=False)
