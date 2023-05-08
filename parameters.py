@@ -2,27 +2,29 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import starchartlist
 
-window = tk.Tk()
+window = tk.Tk() # creates the parameters window
 window.geometry("400x200")
 window.title("Parameters")
 
 
 def selections():
+    """Pulls the values from the user inputs in the parameters window and sends them to the star_chart.py file for the star chart generation
+    as well as sending the month the listCurrentConstellations function in the starchartlist.py file to create the constellation list window."""
     loadingLabelText.set("Star chart is loading, this may take a moment...") # displays a loading status at the bottom of the parameters window
     window.update()
-    location = locale.get()
+    location = locale.get() # get methods to pull the dropdown menu values to the sky_chart.py file
     year = t_year.get()
     month = t_month.get()
     day = t_day.get()
     hour = t_hour.get()
-    with open("star_chart.py") as f: # runs 
+    with open("star_chart.py") as f: # runs the code in the star_chart.py file to generate the sky chart window
         exec(f.read())
     loadingLabelText.set("") # once the results window and star chart appear nearly together, the loading status is reset to display nothing
     starchartlist.listCurrentConstellations(month) # creates constellation list window
 
     
 
-
+# contents of the parameters window
 label = ttk.Label(text="City:", )
 label.place(x=50, y=5)
 locale = ttk.Combobox(
@@ -67,7 +69,7 @@ t_hour.place(x=225, y=70, width=75)
 button = ttk.Button(text="Create Star Chart", command=selections)
 button.place(x=50, y=110)
 
-loadingLabelText = tk.StringVar()
+loadingLabelText = tk.StringVar() # holds the value for the loading status message space at the bottom of the parameters window
 loadingLabelText.set("")
 loadingStatus = ttk.Label(textvariable=loadingLabelText)
 loadingStatus.place(y=150, x=50)

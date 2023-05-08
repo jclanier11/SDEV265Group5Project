@@ -22,3 +22,5 @@ We modified it to match the following:
     # except ImportError:
     WRAP = tuple
     COLLECTION_TYPE = tuple
+
+Original sky_chart.py file pulled from viyaleta on GitHub, url: https://github.com/viyaleta/Python-Demos/blob/main/Sky%20Map%20Demo.ipynb.

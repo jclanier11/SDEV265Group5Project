@@ -44,6 +44,8 @@ constObjList = [Aqr, Ari, Cnc, Cap, Gem, Leo, Lib, Psc, Sgr,
 
 
 def generateInfoWindow(constellation):
+    """Takes the 'constellation' object parameter from the 'command' parameter of the button in the constellation list window and
+    generates a window with the information for that constellation object."""
     information = tk.Toplevel()  # Sets new window
     information.geometry("600x750")  # Sets window size
     information.title("Information")  # Sets window title
@@ -85,11 +87,6 @@ def generateInfoWindow(constellation):
 
     monthsLabel = tk.Label(information)
     monthsLabel.pack()
-
-    # assign the text attribute values to the constellation object attributes that were passed
-    # We'll also have to put in this function the loops that will pull the extra data
-    # out of the constellations.txt file based on the constellation object's acronym
-    # for the extra info
 
     # populating labels with text
     name1Label['text'] = "Name: " + constellation.name1
