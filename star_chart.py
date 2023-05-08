@@ -1,7 +1,7 @@
 # datetime library
 from datetime import datetime
 from geopy import Nominatim
-from tzwhere import tzwhere
+from tzwhere.tzwhere import tzwhere
 from pytz import timezone, utc
 # matplotlib to help display our star map
 import numpy as np
@@ -12,8 +12,6 @@ from matplotlib.patches import Circle
 from skyfield.api import Star, load, wgs84
 from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
-
-import starchartlist
 
 
 # Loading Earth and Star Data
@@ -37,7 +35,7 @@ lat, long = location.latitude, location.longitude
 # convert date string into datetime object
 dt = datetime.strptime(when, '%Y-%m-%d %H:%M')
 # define datetime and convert to utc based on our timezone
-timezone_str = tzwhere.tzwhere().tzNameAt(lat, long)
+timezone_str = tzwhere().tzNameAt(lat, long)
 local = timezone(timezone_str)
 # get UTC from local timezone and datetime
 local_dt = local.localize(dt, is_dst=None)
@@ -126,4 +124,4 @@ plt.axis('off')
 
 plt.show(block=False)
 
-starchartlist.listCurrentConstellations(month)
+

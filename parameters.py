@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+import starchartlist
 
 window = tk.Tk()
 window.geometry("400x200")
@@ -7,13 +8,19 @@ window.title("Parameters")
 
 
 def selections():
+    loadingLabelText.set("Star chart is loading, this may take a moment...") # displays a loading status at the bottom of the parameters window
+    window.update()
     location = locale.get()
     year = t_year.get()
     month = t_month.get()
     day = t_day.get()
     hour = t_hour.get()
-    with open("star_chart.py") as f:
+    with open("star_chart.py") as f: # runs 
         exec(f.read())
+    loadingLabelText.set("") # once the results window and star chart appear nearly together, the loading status is reset to display nothing
+    starchartlist.listCurrentConstellations(month) # creates constellation list window
+
+    
 
 
 label = ttk.Label(text="City:", )
@@ -59,6 +66,11 @@ t_hour.place(x=225, y=70, width=75)
 
 button = ttk.Button(text="Create Star Chart", command=selections)
 button.place(x=50, y=110)
+
+loadingLabelText = tk.StringVar()
+loadingLabelText.set("")
+loadingStatus = ttk.Label(textvariable=loadingLabelText)
+loadingStatus.place(y=150, x=50)
 
 
 window.mainloop()

@@ -1,7 +1,6 @@
 import tkinter as tk
 import constellations
 
-
 def listCurrentConstellations(month):
     """In response to the user submitting parameters (selection() function in parameters.py)
     in the first window, this function compares the month the user chose to the startMonth
@@ -10,14 +9,14 @@ def listCurrentConstellations(month):
     month selection."""
 
     # starting the new popup window
+    global constList
     constList = tk.Toplevel()
     constList.config(width=200, height=200)
     constList.title("Constellation List")
 
     # creating the header above the buttons
     header = tk.Label(constList,
-                      text='Star Chart takes a few seconds to load, please be patient!\n'
-                      '\n Here are the constellations that are best viewed' '\n in the month you chose:')
+                      text='\nHere are the constellations that are best viewed' '\n in the month you chose:')
     header.pack()
 
     # empty list to hold the Constellation objects that match the user's month selection
@@ -45,7 +44,7 @@ def listCurrentConstellations(month):
         button.pack()
 
     constList.mainloop()
-
+ 
 
 if __name__ == "__main__":
     listCurrentConstellations(month)
