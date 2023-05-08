@@ -67,7 +67,7 @@ def generateInfoWindow(constellation):
 
     # resizing and placing image into frame
     constellImg = ImageTk.PhotoImage(img.resize((500, 555), Image.ANTIALIAS))
-    imgLabel = tk.Label(imageFrame, image=constellImg)
+    imgLabel = tk.Label(imageFrame, image=constellImg, bg="white")
     imgLabel.pack()
 
     name1Label = tk.Label(information)
